@@ -69,7 +69,7 @@ def apiOne(request):
 @csrf_exempt
 def apiTwo(request):
     if not enforce_rate_limit(request):
-        return JsonResponse({'message': 'Rate limit exceeded'}, status=429)
+        return JsonResponse({'message': "","error":f"""limit reached for from """ })
     if request.method == 'POST':
         to_params=False
         from_params=False

@@ -16,11 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import re_path as url
-from project.views import apiOne, apiTwo  
+from project.views import apiOne, apiTwo, default 
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    # url('',views.default),
+    # url('',default),
     url('^api/one$', apiOne, name='apiOne'),
     url('^api/two$', apiTwo,name='apiTwo'),
 
