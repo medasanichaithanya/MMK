@@ -25,12 +25,9 @@ SECRET_KEY = 'django-insecure-#y^-#*q4o*a*8w*-u#!x%pvnr*bm3s1&ov&7#v)&^lj$4s18!u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [".versel.app"]
 
-CORS_ORIGIN_WHITELIST = ('http://localhost:8000',)
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000','http://localhost:3000']
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
+
 
 
 # Application definition
