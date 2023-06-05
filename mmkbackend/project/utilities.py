@@ -41,14 +41,17 @@ def validate_toparam(request):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         to_param = body['to'] if body['to']  else  ''
-        if 6<=len(to_param)<=16 :
-            check_to_param = Phone_number.objects.filter(number=int(to_param))
-            if check_to_param:
-                   return True,str("valid")
+        if to_param:
+            if 6<=len(to_param)<=16 :
+                check_to_param = Phone_number.objects.filter(number=int(to_param))
+                if check_to_param:
+                    return True,str("valid")
+                else:
+                    return False,str("to param is not found")
             else:
-                return False,str("to param is not found")
+                return False,str("to param is invalid")
         else:
-            return False,str("to param is invalid")
+            return False,str("to param is missing")
     else:
         return False,""
     
@@ -57,14 +60,17 @@ def validate_fromparam(request):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         from_param = body['from'] if body['from']  else  ''
-        if 6<=len(from_param)<=16 :
-            check_to_param = Phone_number.objects.filter(number=int(from_param))
-            if check_to_param:
-                   return True,str("valid")
+        if from_param:
+            if 6<=len(from_param)<=16 :
+                check_to_param = Phone_number.objects.filter(number=int(from_param))
+                if check_to_param:
+                    return True,str("valid")
+                else:
+                    return False,str("from param is not found")
             else:
-                return False,str("from param is not found")
+                return False,str("from param is invalid")
         else:
-            return False,str("from param is invalid")
+            return False,str("from param is missing")
     else:
         return False,""
 

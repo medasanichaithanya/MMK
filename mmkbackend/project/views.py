@@ -42,13 +42,16 @@ def inboundapi(request):
             to_param = body['to'] if body['to']  else  ''
             from_param = body['from'] if body['from']  else  ''
             text = body['text']  if  body['text'] else  ''
-            if 1<=len(text)<=120 and from_params and to_params:
-                  if "STOP".strip() in text:
-                    cache.set('to',to_param,timeout=40*60*60)
-                    cache.set('from',from_param,timeout=40*60*60)
-                  return JsonResponse({"message": "inbound sms ok", "error": ""})               
+            if text:
+                if 1<=len(text)<=120 and from_params and to_params:
+                    if "STOP".strip() in text:
+                        cache.set('to',to_param,timeout=40*60*60)
+                        cache.set('from',from_param,timeout=40*60*60)
+                    return JsonResponse({"message": "inbound sms ok", "error": ""})               
+                else:
+                    return JsonResponse({"message": "", "error": "text param is invalid"})
             else:
-                return JsonResponse({"message": "", "error": "to param is invalid"})
+                return JsonResponse({"message": "", "error": "text param is missed"})
         except Exception as e:
             return JsonResponse({"message": "", "error":"unknown failure"})
     else:
@@ -86,15 +89,18 @@ def outboundapi(request):
             to_param = body['to'] if body['to']  else  ''
             from_param = body['from'] if body['from']  else  ''
             text = body['text']  if  body['text'] else  ''
-            if 1<=len(text)<=120 and from_params and to_params:
-                  check_to_cache = cache.get('to')
-                  check_from_cache = cache.get('from')
-                  if check_to_cache==to_param and check_from_cache==from_param:
-                      return JsonResponse({"message": "", "error": f"""sms from {from_param} to {to_param} blocked by STOP request"""})  
-                  else:
-                    return JsonResponse({"message": "outbound sms ok", "error": ""})            
+            if text:
+                if 1<=len(text)<=120 and from_params and to_params:
+                    check_to_cache = cache.get('to')
+                    check_from_cache = cache.get('from')
+                    if check_to_cache==to_param and check_from_cache==from_param:
+                        return JsonResponse({"message": "", "error": f"""sms from {from_param} to {to_param} blocked by STOP request"""})  
+                    else:
+                        return JsonResponse({"message": "outbound sms ok", "error": ""})            
+                else:
+                    return JsonResponse({"message": "", "error": "text param is invalid"})
             else:
-                return JsonResponse({"message": "", "error": "to param is invalid"})
+                return JsonResponse({"message": "", "error": "text param is missed"})
         except Exception as e:
             return JsonResponse({"message": "", "error":"unknown failure"})
     else:
