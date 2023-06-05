@@ -46,9 +46,8 @@ def inboundapi(request):
             if text:
                 if 1<=len(text)<=120 and from_params and to_params:
                     if "STOP".strip() in text:
-                        # r.set('to',to_param,timeout=40*60*60)
-                        # r.set('from',from_param,timeout=40*60*60)
-                        cache.set('to','to_param',40*60*60)
+                        cache.set('to',to_param,timeout=40*60*60)
+                        cache.set('from',from_param,timeout=40*60*60)
                         return JsonResponse({"message": "inbound sms ok", "error": ""})               
                 else:
                     return JsonResponse({"message": "", "error": "text param is invalid"})

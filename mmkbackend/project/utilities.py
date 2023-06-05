@@ -11,7 +11,7 @@ def check_rate_limit(request):
         from_param = body['from'] if body['from']  else  ''
         cache_key = f"{from_param}_request_count"
         request_count = cache.get(cache_key, 0)
-        if request_count >= 3:
+        if request_count >= 50:
             return False," " 
         
         cache.set(cache_key, request_count + 1, int(timedelta(days=1).total_seconds()))
