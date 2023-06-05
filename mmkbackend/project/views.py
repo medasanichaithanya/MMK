@@ -39,6 +39,8 @@ def inboundapi(request):
             # text validation
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
+            to_param = body['to'] if body['to']  else  ''
+            from_param = body['from'] if body['from']  else  ''
             text = body['text']  if  body['text'] else  ''
             if 1<=len(text)<=120 and from_params and to_params:
                   if "STOP".strip() in text:
@@ -81,18 +83,19 @@ def outboundapi(request):
             # text validation
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
-           
+            to_param = body['to'] if body['to']  else  ''
+            from_param = body['from'] if body['from']  else  ''
             text = body['text']  if  body['text'] else  ''
             if 1<=len(text)<=120 and from_params and to_params:
                   check_to_cache = cache.get('to')
                   check_from_cache = cache.get('from')
-                  if check_to_cache and check_from_cache:
+                  if check_to_cache==to_param and check_from_cache==from_param:
                       return JsonResponse({"message": "", "error": f"""sms from {from_param} to {to_param} blocked by STOP request"""})  
                   else:
                     return JsonResponse({"message": "outbound sms ok", "error": ""})            
             else:
                 return JsonResponse({"message": "", "error": "to param is invalid"})
         except Exception as e:
-            return JsonResponse({'message': '', 'error':'unknown failure'})
+            return JsonResponse({"message": "", "error":"unknown failure"})
     else:
-        return JsonResponse({'message':'method not Allowed', 'status_code': '405'})
+        return JsonResponse({"message":"method not Allowed"},status=403)
