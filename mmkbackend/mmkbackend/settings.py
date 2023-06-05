@@ -138,14 +138,25 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://default:0zznuJY47UX3FZ6b90ERo0h98m0kRX25@redis-17961.c84.us-east-1-2.ec2.cloud.redislabs.com:17961',  # Replace with your Redis server details
+#          "OPTIONS": {
+#             "DB": "Medasani-free-db",
+#             "PASSWORD": "0zznuJY47UX3FZ6b90ERo0h98m0kRX25",
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://default:0zznuJY47UX3FZ6b90ERo0h98m0kRX25@redis-17961.c84.us-east-1-2.ec2.cloud.redislabs.com:17961',  # Replace with your Redis server details
-         "OPTIONS": {
-            "DB": "Medasani-free-db",
-            "PASSWORD": "0zznuJY47UX3FZ6b90ERo0h98m0kRX25",
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': 'mc2.dev.ec2.memcachier.com:11211',
+        'OPTIONS': {
+                    'username': '03E993',
+                    'password':'5F872A5DB64F4DE2650B5025A4CCD749',
         }
     }
 }

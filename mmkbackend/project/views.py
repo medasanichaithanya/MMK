@@ -8,6 +8,7 @@ from django.core.cache import cache
 # from django_ratelimit.decorators import ratelimit
 from .utilities import check_rate_limit, auth_check, validate_fromparam, validate_toparam
 
+
 # Create your views here.
 def default(request):
     return HttpResponse("Hello Welcome!")
@@ -45,9 +46,10 @@ def inboundapi(request):
             if text:
                 if 1<=len(text)<=120 and from_params and to_params:
                     if "STOP".strip() in text:
-                        cache.set('to',to_param,timeout=40*60*60)
-                        cache.set('from',from_param,timeout=40*60*60)
-                    return JsonResponse({"message": "inbound sms ok", "error": ""})               
+                        # r.set('to',to_param,timeout=40*60*60)
+                        # r.set('from',from_param,timeout=40*60*60)
+                        cache.set('to','to_param',40*60*60)
+                        return JsonResponse({"message": "inbound sms ok", "error": ""})               
                 else:
                     return JsonResponse({"message": "", "error": "text param is invalid"})
             else:
